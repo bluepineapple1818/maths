@@ -47,7 +47,7 @@ body {
   100% { transform: translate(30px,-40px) rotate(8deg) scale(1.1); }
 }
 
-/* ===== START SCREEN (MATH GAMES) ===== */
+/* ===== START SCREEN ===== */
 .start-screen {
   position: fixed; inset: 0; z-index: 9999;
   background: radial-gradient(circle at 30% 30%, #1a0f1e, #070609 80%);
@@ -118,7 +118,7 @@ body {
 .stat-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 2px; color: #9aafcc; font-weight: 700; }
 .stat-value { font-size: 1.7rem; font-weight: 800; color: #ffb9dd; text-shadow: 0 0 15px #ff3d9f; font-variant-numeric: tabular-nums; }
 
-/* ===== MAIN GUI (STEAM) ===== */
+/* ===== MAIN GUI ===== */
 .main-gui {
   position: relative; z-index: 10;
   width: 100%; height: 100vh;
@@ -209,40 +209,40 @@ body {
 .nav-item.active { background: rgba(29,107,243,.19); border: 2px solid var(--accent); color: #fff; box-shadow: 0 0 20px var(--accent-glow); }
 .nav-item.active i { color: var(--accent-soft); }
 
-.content { flex: 1; overflow-y: auto; padding: 2rem 2rem 3rem; background: #0b0f16; display: flex; flex-direction: column; gap: 1.2rem; }
+.content { flex: 1; overflow-y: auto; padding: 1.5rem 1.5rem 2.5rem; background: #0b0f16; display: flex; flex-direction: column; gap: 1rem; }
 .section-title {
   display: flex; align-items: center; gap: 15px;
-  font-size: 1.6rem; font-weight: 700; letter-spacing: 1px;
-  color: #d6e5ff; margin-bottom: .5rem;
+  font-size: 1.4rem; font-weight: 700; letter-spacing: 1px;
+  color: #d6e5ff; margin-bottom: .3rem;
 }
 .section-title i { color: var(--accent); }
 
-/* ===== GAME GRID (2 per row) ===== */
+/* ===== GAME GRID — 4 per row ===== */
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .9rem;
 }
 
 .game-banner {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   border: 2px solid var(--border);
   transition: transform .25s ease, border-color .25s, box-shadow .25s;
-  box-shadow: 0 10px 25px -5px black;
+  box-shadow: 0 6px 14px -4px black;
   background: var(--surface);
   display: flex;
   flex-direction: column;
 }
 
 .game-banner:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--accent);
-  box-shadow: 0 20px 35px -10px var(--accent-glow);
+  box-shadow: 0 12px 22px -8px var(--accent-glow);
 }
 
 .game-banner-img {
@@ -256,23 +256,23 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.35) 100%);
+  background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.3) 100%);
 }
 
 .game-banner-bucks {
   background: #0b0f16;
   border-top: 2px solid var(--border);
-  padding: .7rem 1rem;
+  padding: .45rem .6rem;
   text-align: center;
   position: relative;
   z-index: 2;
 }
 
 .game-banner-title {
-  font-size: 1.05rem;
+  font-size: .8rem;
   font-weight: 700;
   color: #fff;
-  letter-spacing: 1px;
+  letter-spacing: .5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -280,14 +280,14 @@ body {
 
 .game-banner-meta {
   position: absolute;
-  top: 8px;
-  right: 10px;
-  font-size: .65rem;
+  top: 6px;
+  right: 8px;
+  font-size: .55rem;
   color: #fff;
   background: rgba(11,14,20,.75);
-  padding: 3px 8px;
-  border-radius: 8px;
-  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  letter-spacing: .5px;
   z-index: 3;
   backdrop-filter: blur(4px);
 }
@@ -335,15 +335,21 @@ body {
 ::-webkit-scrollbar-thumb { background: #2a3b55; border-radius: 20px; border: 2px solid var(--bg); }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
+@media (max-width: 1200px) {
+  .game-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 @media (max-width: 900px) {
   .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
   .sidebar { display: none; }
-  .content { padding: 1.5rem 1rem; }
-  .game-grid { grid-template-columns: 1fr; }
-  .game-banner-title { font-size: .95rem; }
+  .content { padding: 1rem .8rem; }
+  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .game-banner-title { font-size: .7rem; }
   .logo-text { font-size: 1.2rem; }
+}
+@media (max-width: 450px) {
+  .game-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -356,7 +362,7 @@ body {
   <svg width="100" height="100" viewBox="0 0 24 24" style="top:80%;left:15%;animation-duration:28s;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
 </div>
 
-<!-- ===== START SCREEN (MATH GAMES) ===== -->
+<!-- ===== START SCREEN ===== -->
 <div class="start-screen" id="startScreen">
   <div class="start-content">
     <div class="start-logo-wrap">
@@ -396,7 +402,7 @@ body {
   </div>
 </div>
 
-<!-- ===== MAIN GUI (STEAM) ===== -->
+<!-- ===== MAIN GUI ===== -->
 <div class="main-gui" id="mainGui">
   <div class="top-bar">
     <div class="logo-area">
@@ -464,7 +470,7 @@ body {
     { name: "Five Nights at Freddy's 4", file: 'fnaf-4.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM-_EPZUtsSMPjSi4vDy3MH4A1qlkkU2_d3Jo8zH_DsA&s=10' },
     { name: 'Ultimate Custom Night', file: 'ultimate-custom-night.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBEMTe4vTe--SzPAUkMtlIFm6lx-b8gv6ONTD_sNCHMA&s=10' },
     { name: 'Geometry Dash', file: 'geometry-dash.html', img: 'https://s3-alpha.figma.com/hub/file/2867945787/19681ce8-764a-4b6e-a356-c78018b49d7b-cover.png' },
-    { name: 'Plague Inc.', file: 'plague-inc.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-9TrvQ5SqHCaKI79vcz50gB9iDsT7Yr7bcN5Q8mk-L76V3qqli-pBGzN&s=10' },
+    { name: 'Plague Inc.', file: 'plague-inc.html', img: 'https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_PlagueIncEvolved_image1600w.jpg' },
     { name: 'Granny', file: 'granny.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQETQ1wu4Y4u1JXy6-6bdbW92dIKfQ-mTUOimgS5OoI_g&s=10' },
     { name: 'Celeste', file: 'celeste.html', img: 'https://img.itch.zone/aW1nLzEwMjQyNTgucG5n/original/kDcm5O.png' },
     { name: 'FNAF: Sister Location', file: 'fnaf-sister-location.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNeOXlOIv1dJYZ7snNr9WeaFoEHjCC8cE7EugtCtViqQ&s' },
@@ -473,6 +479,33 @@ body {
     { name: 'Cuphead', file: 'cuphead.html', img: 'https://ithrivegames.org/wp-content/uploads/2020/04/it_cupheadv2-1200x0-c-default.jpg' },
     { name: 'Deltarune', file: 'deltarune.html', img: 'https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/11/Deltarune.png' },
     { name: 'People Playground', file: 'people-playground.html', img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1118200/header.jpg?t=1776802758' },
+    { name: 'Wheelie Bike', file: 'wheelie-bike.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFk9fVnNrybjqzD57yAZZGFAtSytzqT7U5P_NrwtmI0w&s=10' },
+    { name: 'Trombone Champ', file: 'trombone-champ.html', img: 'https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/2x1_NSwitchDS_TromboneChamp.jpg' },
+    { name: 'Trees Hate You', file: 'trees-hate-you.html', img: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4171850/e91e9662ad67f01a965b1ea764629bd63cba7c32/capsule_616x353.jpg?t=1787891955' },
+    { name: 'Table Tennis World Tour', file: 'table-tennis-world-tour.html', img: 'https://imgs.crazygames.com/table-tennis-world-tour_16x9/20230908041108/table-tennis-world-tour_16x9-cover?metadata=none&quality=100&width=1200&height=630&fit=crop' },
+    { name: 'Skate 3', file: 'skate-3.html', img: 'https://media.contentapi.ea.com/content/dam/gin/images/2017/01/skate-3-key-art.jpg.adapt.crop191x100.628p.jpg' },
+    { name: 'Russian Counter Strike', file: 'russian-counter-strike.html', img: 'https://images.steamusercontent.com/ugc/1653347126887101751/B4E5D88FEEB55C93C37F812B731FF49CF1AAECE0/?imw=1024&imh=768&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true' },
+    { name: 'Pikuniku', file: 'pikuniku.html', img: 'https://store-images.s-microsoft.com/image/apps.7703.14041044108785223.82419c4d-359a-436a-b07d-12cf7137d8fc.2cb971f9-2b51-4824-b789-52e49f050b4d' },
+    { name: 'PEAK', file: 'peak.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTPuIHHvpYh16dNzL7rD_vS_7d_awpcPIGIaHDWZ-EPg&s=10' },
+    { name: 'NoomiClone', file: 'noomi-clone.html', img: 'https://play-lh.googleusercontent.com/VtZsSr-cpNpy5wQRxFSv5B7zQgx4MutD-vCEEZSshZh3glxRK3kpf1VHuGNkl1E0bEQ=w3840-h2160-rw' },
+    { name: 'Moto X3M', file: 'moto-x3m.html', img: 'https://www.coolmathgames.com/sites/default/files/MotoX3M_OG-logo.jpg' },
+    { name: 'La Madriguera', file: 'la-madriguera.html', img: 'https://img.itch.zone/aW1nLzY5MDY1NTUuanBn/original/5%2FDOxn.jpg' },
+    { name: 'Kickabout', file: 'kickabout.html', img: 'https://images.icon-icons.com/3315/PNG/512/sports_game_sport_ball_soccer_football_icon_209369.png' },
+    { name: 'How to Fish', file: 'how-to-fish.html', img: 'https://gaming-cdn.com/images/products/23683/616x353/how-to-fish-pc-steam-cover.jpg?v=1787297248' },
+    { name: 'Getaway Shootout', file: 'getaway-shootout.html', img: 'https://imgs.crazygames.com/getaway-shootout_16x9/20241230044730/getaway-shootout_16x9-cover?metadata=none&quality=100&width=1200&height=630&fit=crop' },
+    { name: 'Drift Hunters', file: 'drift-hunters.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_3YHsmGlP6KxbDIwHfc-yz-7AkSo8_fitm_sGadCrMbCSFtt1hINmIbT4&s=10' },
+    { name: 'Doodle Jump', file: 'doodle-jump.html', img: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Doodle_Jump.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original' },
+    { name: 'Deathrun 3D', file: 'deathrun-3d.html', img: 'https://play-lh.googleusercontent.com/h2uFBJ2Tw8vjcOoHti8diG9OA_ujp36VlXloC1ijOEecT1r5a0s46TizyAb0RwsvYqRSCEk1jTbyjystXSkHNYQ' },
+    { name: 'CS Surf', file: 'cs-surf.html', img: 'https://cdn.mos.cms.futurecdn.net/ZPwx6tmYKQtnPZDRCAfXMj.jpg' },
+    { name: 'Crossy Road', file: 'crossy-road.html', img: 'https://crossy-road.io/data/image/how-to-play-crossy-road.jpg' },
+    { name: 'Crashout Crew', file: 'crashout-crew.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP599APaJX8VzVHdE0hVgYVd-umyrUtLjDYWxGEwcenjAAWBr3Bb-xrug&s=10' },
+    { name: 'Clustertruck', file: 'clustertruck.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnUExN3PmZZu64dCwAgRhJFtHfYpU4naHUaxvlsnD5xQ&s' },
+    { name: 'BuildNow GG', file: 'buildnow-gg.html', img: 'https://imgs.crazygames.com/buildnow-gg_16x9/20251229084241/buildnow-gg_16x9-cover?metadata=none&quality=60&height=7226' },
+    { name: 'Black Ops 1 Zombies', file: 'bo1-zombies.html', img: 'https://i.redd.it/diyp8ti98lu91.jpg' },
+    { name: 'The Binding of Isaac: Wrath of the Lamb', file: 'binding-of-isaac.html', img: 'https://fnaffree.io/data/image/game/the-binding-of-isaac-wrath-of-the-lamb/the-binding-of-isaac-wrath-of-the-lamb.png' },
+    { name: 'Basket Random', file: 'basket-random.html', img: 'https://imgs.crazygames.com/basket-random_16x9/20240617090207/basket-random_16x9-cover?metadata=none&quality=100&width=1200&height=630&fit=crop' },
+    { name: '8 Ball Pool', file: '8-ball-pool.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoHWRRIwQP2Rsa9A0S2rk946Qc4krjt0ul5LaZ3poYyXDpJcH-eRxBLvk&s=10' },
+    { name: '60 Seconds', file: '60-seconds.html', img: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/60_Seconds%21.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original' },
   ];
 
   // ================================================================
