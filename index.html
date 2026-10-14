@@ -109,7 +109,6 @@ body {
 .start-btn:active { transform: translateY(5px); box-shadow: 0 5px 0 #8a0d4a, 0 15px 30px #00000080; }
 .start-btn:hover { background: #ff5aab; box-shadow: 0 10px 0 #8a0d4a, 0 25px 50px #ff3d9faa; }
 
-/* ===== LIVE STATS ===== */
 .live-stats { display: flex; gap: 1rem; margin-top: 2rem; justify-content: center; flex-wrap: wrap; }
 .stat-box {
   background: #0d0a0fcc; border: 2px solid rgba(255,61,159,.3);
@@ -130,7 +129,6 @@ body {
 }
 .main-gui.active { opacity: 1; pointer-events: auto; }
 
-/* ----- TOP BAR (STEAM) ----- */
 .top-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: .75rem 1.5rem;
@@ -154,7 +152,6 @@ body {
 .top-actions i { cursor: pointer; transition: all .2s; padding: 8px; border-radius: 12px; }
 .top-actions i:hover { color: #fff; background: rgba(29,107,243,.19); transform: scale(1.1); }
 
-/* ===== NOTIFICATION ===== */
 .notif-wrap { position: relative; }
 .notif-badge {
   position: absolute; top: -4px; right: -4px;
@@ -178,7 +175,6 @@ body {
 .notif-popup p { color: var(--text-light); font-size: .9rem; line-height: 1.5; }
 .notif-popup .notif-date { color: var(--accent-soft); font-size: .75rem; font-weight: 700; letter-spacing: 1px; margin-bottom: .4rem; }
 
-/* ===== LAYOUT (STEAM) ===== */
 .main-layout { display: flex; flex: 1; overflow: hidden; }
 
 .sidebar {
@@ -213,10 +209,6 @@ body {
 .nav-item.active { background: rgba(29,107,243,.19); border: 2px solid var(--accent); color: #fff; box-shadow: 0 0 20px var(--accent-glow); }
 .nav-item.active i { color: var(--accent-soft); }
 
-.divider { height: 2px; background: var(--border); margin: .5rem 0; border-radius: 2px; }
-.category-tag { font-size: .85rem; text-transform: uppercase; letter-spacing: 2px; color: #697b96; padding-left: .8rem; font-weight: 600; }
-
-/* ===== CONTENT (STEAM) ===== */
 .content { flex: 1; overflow-y: auto; padding: 2rem 2rem 3rem; background: #0b0f16; display: flex; flex-direction: column; gap: 1.2rem; }
 .section-title {
   display: flex; align-items: center; gap: 15px;
@@ -225,7 +217,6 @@ body {
 }
 .section-title i { color: var(--accent); }
 
-/* ===== GAME BANNER ===== */
 .game-banner {
   position: relative; width: 100%; height: 150px;
   border-radius: 20px; overflow: hidden; cursor: pointer;
@@ -261,7 +252,6 @@ body {
   letter-spacing: 1px; z-index: 2;
 }
 
-/* ===== GAME PREVIEW ===== */
 .game-preview {
   position: fixed; inset: 0; z-index: 10000;
   background: rgba(7,6,9,.98);
@@ -299,7 +289,6 @@ body {
 }
 .preview-stage iframe { width: 100%; height: 100%; border: none; background: #000; }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #0a0e14; }
 ::-webkit-scrollbar-thumb { background: #2a3b55; border-radius: 20px; border: 2px solid var(--bg); }
@@ -424,7 +413,22 @@ body {
   // GAME LIST — Add new games at the BOTTOM (they show first in New Releases)
   // ================================================================
   const GAMES = [
-    { name: 'Among Us', file: 'among-us.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFZ7tdplHROafc_A5tVU2caO0i2ZXpoEL_OORMMg-9Bg&s=10' },
+    { name: 'Terraria', file: 'terraria.html', img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg?t=1769844435' },
+    { name: 'Five Nights at Freddy\'s 1', file: 'fnaf-1.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXzh4krVDvdfMayf3bO_9yXHEODyziQ1NaxyY6XOYWww&s=10' },
+    { name: 'Five Nights at Freddy\'s 2', file: 'fnaf-2.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9KjiaUvzVXYJKSzdfmFslnrojhdAboPsKJemy1PPkqw&s=10' },
+    { name: 'Five Nights at Freddy\'s 3', file: 'fnaf-3.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9LYUBE7LspVZh2pHPK9LwLtdF496pSECl1yy0qnxgJw&s=10' },
+    { name: 'Five Nights at Freddy\'s 4', file: 'fnaf-4.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM-_EPZUtsSMPjSi4vDy3MH4A1qlkkU2_d3Jo8zH_DsA&s=10' },
+    { name: 'Ultimate Custom Night', file: 'ultimate-custom-night.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBEMTe4vTe--SzPAUkMtlIFm6lx-b8gv6ONTD_sNCHMA&s=10' },
+    { name: 'Geometry Dash', file: 'geometry-dash.html', img: 'https://s3-alpha.figma.com/hub/file/2867945787/19681ce8-764a-4b6e-a356-c78018b49d7b-cover.png' },
+    { name: 'Plague Inc.', file: 'plague-inc.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-9TrvQ5SqHCaKI79vcz50gB9iDsT7Yr7bcN5Q8mk-L76V3qqli-pBGzN&s=10' },
+    { name: 'Granny', file: 'granny.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQETQ1wu4Y4u1JXy6-6bdbW92dIKfQ-mTUOimgS5OoI_g&s=10' },
+    { name: 'Celeste', file: 'celeste.html', img: 'https://img.itch.zone/aW1nLzEwMjQyNTgucG5n/original/kDcm5O.png' },
+    { name: 'FNAF: Sister Location', file: 'fnaf-sister-location.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNeOXlOIv1dJYZ7snNr9WeaFoEHjCC8cE7EugtCtViqQ&s' },
+    { name: 'FNAF: Pizzeria Simulator', file: 'fnaf-pizzeria-simulator.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSqTcoPMwbi5IYmpm1Ds7UDLv2xLr4uCIUJD_dKxP8hg&s' },
+    { name: 'Hollow Knight: Silksong', file: 'hollow-knight-silksong.html', img: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1030300/header.jpg' },
+    { name: 'Cuphead', file: 'cuphead.html', img: 'https://ithrivegames.org/wp-content/uploads/2020/04/it_cupheadv2-1200x0-c-default.jpg' },
+    { name: 'Deltarune', file: 'deltarune.html', img: 'https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/11/Deltarune.png' },
+    { name: 'People Playground', file: 'people-playground.html', img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1118200/header.jpg?t=1776802758' },
   ];
 
   // ================================================================
@@ -598,7 +602,6 @@ body {
     if (e.key === 'Enter' && !startScreen.classList.contains('slide-up')) startBtn.click();
   });
 
-  // Notification
   const notifBell = document.getElementById('notifBell');
   const notifPopup = document.getElementById('notifPopup');
   const notifClose = document.getElementById('notifClose');
