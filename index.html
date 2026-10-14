@@ -217,41 +217,82 @@ body {
 }
 .section-title i { color: var(--accent); }
 
+/* ===== GAME GRID (2 per row) ===== */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
 .game-banner {
-  position: relative; width: 100%; height: 150px;
-  border-radius: 20px; overflow: hidden; cursor: pointer;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
   border: 2px solid var(--border);
   transition: transform .25s ease, border-color .25s, box-shadow .25s;
   box-shadow: 0 10px 25px -5px black;
   background: var(--surface);
-}
-.game-banner:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 20px 35px -10px var(--accent-glow); }
-.game-banner-bg {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  filter: blur(10px) brightness(.5);
-  transform: scale(1.1);
-}
-.game-banner-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(11,14,20,.15) 0%, rgba(11,14,20,.75) 100%);
-}
-.game-banner-content {
-  position: relative; z-index: 2; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 2rem;
-}
-.game-banner-title {
-  font-size: 2rem; font-weight: 800; color: #fff;
-  text-shadow: 0 0 20px var(--accent-glow), 0 4px 10px black;
-  letter-spacing: 2px; text-transform: uppercase; text-align: center;
-}
-.game-banner-meta {
-  position: absolute; bottom: 10px; right: 15px;
-  font-size: .7rem; color: rgba(255,255,255,.5);
-  letter-spacing: 1px; z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
+.game-banner:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 35px -10px var(--accent-glow);
+}
+
+.game-banner-img {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.game-banner-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.35) 100%);
+}
+
+.game-banner-bucks {
+  background: #0b0f16;
+  border-top: 2px solid var(--border);
+  padding: .7rem 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.game-banner-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-banner-meta {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: .65rem;
+  color: #fff;
+  background: rgba(11,14,20,.75);
+  padding: 3px 8px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+
+/* ===== GAME PREVIEW ===== */
 .game-preview {
   position: fixed; inset: 0; z-index: 10000;
   background: rgba(7,6,9,.98);
@@ -294,11 +335,14 @@ body {
 ::-webkit-scrollbar-thumb { background: #2a3b55; border-radius: 20px; border: 2px solid var(--bg); }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
+@media (max-width: 900px) {
+  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 700px) {
   .sidebar { display: none; }
   .content { padding: 1.5rem 1rem; }
-  .game-banner { height: 110px; }
-  .game-banner-title { font-size: 1.3rem; }
+  .game-grid { grid-template-columns: 1fr; }
+  .game-banner-title { font-size: .95rem; }
   .logo-text { font-size: 1.2rem; }
 }
 </style>
@@ -414,10 +458,10 @@ body {
   // ================================================================
   const GAMES = [
     { name: 'Terraria', file: 'terraria.html', img: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg?t=1769844435' },
-    { name: 'Five Nights at Freddy\'s 1', file: 'fnaf-1.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXzh4krVDvdfMayf3bO_9yXHEODyziQ1NaxyY6XOYWww&s=10' },
-    { name: 'Five Nights at Freddy\'s 2', file: 'fnaf-2.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9KjiaUvzVXYJKSzdfmFslnrojhdAboPsKJemy1PPkqw&s=10' },
-    { name: 'Five Nights at Freddy\'s 3', file: 'fnaf-3.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9LYUBE7LspVZh2pHPK9LwLtdF496pSECl1yy0qnxgJw&s=10' },
-    { name: 'Five Nights at Freddy\'s 4', file: 'fnaf-4.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM-_EPZUtsSMPjSi4vDy3MH4A1qlkkU2_d3Jo8zH_DsA&s=10' },
+    { name: "Five Nights at Freddy's 1", file: 'fnaf-1.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXzh4krVDvdfMayf3bO_9yXHEODyziQ1NaxyY6XOYWww&s=10' },
+    { name: "Five Nights at Freddy's 2", file: 'fnaf-2.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9KjiaUvzVXYJKSzdfmFslnrojhdAboPsKJemy1PPkqw&s=10' },
+    { name: "Five Nights at Freddy's 3", file: 'fnaf-3.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9LYUBE7LspVZh2pHPK9LwLtdF496pSECl1yy0qnxgJw&s=10' },
+    { name: "Five Nights at Freddy's 4", file: 'fnaf-4.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM-_EPZUtsSMPjSi4vDy3MH4A1qlkkU2_d3Jo8zH_DsA&s=10' },
     { name: 'Ultimate Custom Night', file: 'ultimate-custom-night.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBEMTe4vTe--SzPAUkMtlIFm6lx-b8gv6ONTD_sNCHMA&s=10' },
     { name: 'Geometry Dash', file: 'geometry-dash.html', img: 'https://s3-alpha.figma.com/hub/file/2867945787/19681ce8-764a-4b6e-a356-c78018b49d7b-cover.png' },
     { name: 'Plague Inc.', file: 'plague-inc.html', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm-9TrvQ5SqHCaKI79vcz50gB9iDsT7Yr7bcN5Q8mk-L76V3qqli-pBGzN&s=10' },
@@ -656,23 +700,25 @@ body {
     if (games.length === 0) {
       html += `<div style="color:#697b96;text-align:center;padding:3rem;font-size:1.2rem;">No games found.</div>`;
     } else {
+      html += `<div class="game-grid">`;
       html += games.map(g => {
         const slug = g.file.replace(/\.html?$/i, '');
         const plays = playCountsCache[slug] || 0;
         const meta = (currentFilter === 'trending' || currentFilter === 'popular') && plays > 0
-          ? `<div class="game-banner-meta">${plays} plays today</div>`
+          ? `<div class="game-banner-meta">${plays} plays</div>`
           : '';
         return `
           <div class="game-banner" data-file="${g.file}" data-name="${g.name}">
-            <div class="game-banner-bg" style="background-image:url('${g.img}')"></div>
-            <div class="game-banner-overlay"></div>
-            <div class="game-banner-content">
+            <div class="game-banner-img" style="background-image:url('${g.img}')">
+              ${meta}
+            </div>
+            <div class="game-banner-bucks">
               <div class="game-banner-title">${g.name}</div>
             </div>
-            ${meta}
           </div>
         `;
       }).join('');
+      html += `</div>`;
     }
 
     contentArea.innerHTML = html;
