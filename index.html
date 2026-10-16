@@ -25,6 +25,8 @@
   --accent-soft: #5f9eff;
   --accent-glow: rgba(29,107,243,.55);
   --gold: #ffb340;
+  --green: #36d48b;
+  --red: #ff5c7a;
 }
 
 body {
@@ -148,9 +150,9 @@ body {
   background: linear-gradient(135deg, #fff, #9bb9ff);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.top-actions { display: flex; gap: 1.5rem; color: var(--text); font-size: 1.2rem; align-items: center; }
-.top-actions i { cursor: pointer; transition: all .2s; padding: 8px; border-radius: 12px; }
-.top-actions i:hover { color: #fff; background: rgba(29,107,243,.19); transform: scale(1.1); }
+.top-actions { display: flex; gap: 1.2rem; color: var(--text); font-size: 1.2rem; align-items: center; }
+.top-actions > i { cursor: pointer; transition: all .2s; padding: 8px; border-radius: 12px; }
+.top-actions > i:hover { color: #fff; background: rgba(29,107,243,.19); transform: scale(1.1); }
 
 .notif-wrap { position: relative; }
 .notif-badge {
@@ -175,6 +177,119 @@ body {
 .notif-popup p { color: var(--text-light); font-size: .9rem; line-height: 1.5; }
 .notif-popup .notif-date { color: var(--accent-soft); font-size: .75rem; font-weight: 700; letter-spacing: 1px; margin-bottom: .4rem; }
 
+/* ===== CHANGELOG POPUP ===== */
+.changelog-popup {
+  position: fixed; inset: 0; z-index: 10001;
+  background: rgba(7,6,9,.85);
+  display: none;
+  justify-content: center; align-items: center;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+  animation: fadeIn .25s ease;
+}
+.changelog-popup.show { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.changelog-panel {
+  background: var(--surface-2);
+  border: 3px solid var(--accent);
+  border-radius: 24px;
+  width: 100%; max-width: 720px;
+  max-height: 85vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0,0,0,.8), 0 0 40px var(--accent-glow);
+  animation: popIn .3s cubic-bezier(.2,.85,.2,1);
+  overflow: hidden;
+}
+@keyframes popIn { from { transform: scale(.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.changelog-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 2px solid var(--border);
+  background: var(--surface);
+}
+.changelog-header h2 {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1.3rem; font-weight: 800; letter-spacing: 1px;
+  color: #fff;
+}
+.changelog-header h2 i { color: var(--accent); }
+.changelog-close {
+  background: transparent; border: none;
+  color: var(--dim); cursor: pointer;
+  font-size: 1.6rem; line-height: 1;
+  padding: 4px 8px; border-radius: 8px;
+  transition: all .2s;
+}
+.changelog-close:hover { color: var(--red); background: rgba(255,92,122,.12); }
+
+.changelog-body {
+  flex: 1; overflow-y: auto;
+  padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.changelog-entry {
+  position: relative;
+  padding: 0 0 1.5rem 1.8rem;
+  border-left: 2px solid var(--border);
+  margin-left: 8px;
+}
+.changelog-entry:last-child { padding-bottom: .3rem; }
+.changelog-entry::before {
+  content: "";
+  position: absolute;
+  left: -9px; top: 4px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--surface-2);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.changelog-entry.creation::before { background: var(--gold); box-shadow: 0 0 14px var(--gold); }
+
+.changelog-date {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--accent-soft);
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+}
+.changelog-entry.creation .changelog-date { color: var(--gold); }
+
+.changelog-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: .6rem;
+  letter-spacing: .3px;
+}
+
+.changelog-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: .4rem;
+}
+.changelog-list li {
+  font-size: .88rem;
+  color: var(--text);
+  line-height: 1.5;
+  padding-left: 22px;
+  position: relative;
+}
+.changelog-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 6px;
+  color: var(--accent-soft);
+  font-weight: 900;
+}
+.changelog-list li.add::before { content: "+"; color: var(--green); font-weight: 900; }
+.changelog-list li.remove::before { content: "−"; color: var(--red); font-weight: 900; }
+.changelog-list li.fix::before { content: "✓"; color: var(--gold); font-weight: 900; }
+.changelog-list li.change::before { content: "~"; color: var(--accent-soft); font-weight: 900; }
+
+/* ===== LAYOUT ===== */
 .main-layout { display: flex; flex: 1; overflow: hidden; }
 
 .sidebar {
@@ -209,11 +324,7 @@ body {
 .nav-item.active { background: rgba(29,107,243,.19); border: 2px solid var(--accent); color: #fff; box-shadow: 0 0 20px var(--accent-glow); }
 .nav-item.active i { color: var(--accent-soft); }
 
-/* Library filter chips */
-.lib-filters {
-  display: flex; flex-direction: column; gap: 6px;
-  padding: .5rem 0;
-}
+.lib-filters { display: flex; flex-direction: column; gap: 6px; padding: .5rem 0; }
 .lib-filter {
   display: flex; align-items: center; gap: 10px;
   padding: .6rem 1rem; border-radius: 14px;
@@ -254,27 +365,23 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 .game-banner:hover {
   transform: translateY(-3px);
   border-color: var(--accent);
   box-shadow: 0 12px 22px -8px var(--accent-glow);
 }
-
 .game-banner-img {
   flex: 1;
   background-size: cover;
   background-position: center;
   position: relative;
 }
-
 .game-banner-img::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,.3) 100%);
 }
-
 .game-banner-bucks {
   background: #0b0f16;
   border-top: 2px solid var(--border);
@@ -283,7 +390,6 @@ body {
   position: relative;
   z-index: 2;
 }
-
 .game-banner-title {
   font-size: .8rem;
   font-weight: 700;
@@ -293,7 +399,6 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .game-banner-meta {
   position: absolute;
   top: 6px;
@@ -307,7 +412,6 @@ body {
   z-index: 3;
   backdrop-filter: blur(4px);
 }
-
 .game-banner-rank {
   position: absolute;
   top: 6px;
@@ -327,7 +431,6 @@ body {
 .game-banner-rank.silver { color: #0b0f16; background: #cfd6e1; border-color: #cfd6e1; }
 .game-banner-rank.bronze { color: #0b0f16; background: #cd7f32; border-color: #cd7f32; }
 
-/* Favorite button (Library only) */
 .fav-btn {
   position: absolute;
   top: 6px;
@@ -347,7 +450,6 @@ body {
 .fav-btn:hover { background: rgba(255,179,64,.3); border-color: var(--gold); }
 .fav-btn.on { background: var(--gold); color: #0b0f16; border-color: var(--gold); }
 
-/* Empty library state */
 .empty-lib {
   text-align: center; padding: 4rem 2rem; color: var(--dim);
 }
@@ -473,6 +575,7 @@ body {
       <span class="logo-text">STEAM</span>
     </div>
     <div class="top-actions">
+      <i class="fa-solid fa-list-check" id="changelogBtn" title="Changelog"></i>
       <div class="notif-wrap">
         <i class="fa-solid fa-bell" id="notifBell"></i>
         <span class="notif-badge" id="notifBadge">1</span>
@@ -526,6 +629,17 @@ body {
   </div>
   <div class="preview-stage">
     <iframe id="previewIframe" src="" title="Game preview" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ===== CHANGELOG POPUP ===== -->
+<div class="changelog-popup" id="changelogPopup">
+  <div class="changelog-panel">
+    <div class="changelog-header">
+      <h2><i class="fa-solid fa-list-check"></i> CHANGELOG</h2>
+      <button class="changelog-close" id="changelogClose">×</button>
+    </div>
+    <div class="changelog-body" id="changelogBody"></div>
   </div>
 </div>
 
@@ -590,10 +704,73 @@ body {
     { name: 'Bad Piggies', file: 'bad-piggies.html', img: 'assets/bad-piggies.jpg' },
     { name: 'Hill Climb Racing Lite', file: 'hill-climb-racing-lite.html', img: 'assets/hill-climb-racing-lite.jpg' },
     { name: 'Melon Playground', file: 'melon-playground.html', img: 'assets/melon-playground.png' },
+    { name: 'Sprunki', file: 'sprunki.html', img: 'assets/sprunki.jpg' },
+    { name: '3D Flight Simulator', file: '3D-flight-simulator.html', img: 'assets/3D-flight-simulator.jpg' },
+    { name: 'Angry Birds', file: 'angry-birds.html', img: 'assets/angry-birds.jpg' },
+    { name: 'Tomb of the Mask', file: 'tomb-of-the-mask.html', img: 'assets/tomb-of-the-mask.jpg' },
   ];
 
   // ================================================================
-  // REAL STATS via CounterAPI
+  // CHANGELOG DATA
+  // ================================================================
+  const CHANGELOG = [
+    {
+      date: '15.10.2026 · 0:34 MSK',
+      title: 'Site Created',
+      creation: true,
+      items: [
+        { type: 'add', text: 'Initial Math Games site with Steam-style UI' },
+        { type: 'add', text: 'Sliding start screen with live stats (online, peak, visits)' },
+        { type: 'add', text: 'Game preview overlay with back / reload / fullscreen' },
+        { type: 'add', text: 'Notification system with welcome message' },
+        { type: 'add', text: 'First batch of games: Terraria, FNAF 1-4, Ultimate Custom Night, Geometry Dash, Plague Inc., Granny, Celeste, Cuphead, Deltarune and more' },
+      ]
+    },
+    {
+      date: '15.10.2026 · later',
+      title: 'Steam UI + Real Stats',
+      items: [
+        { type: 'add', text: 'Steam-style main page with sidebar navigation' },
+        { type: 'add', text: 'Real global stats via CounterAPI (online, peak, visits)' },
+        { type: 'add', text: 'Trending Now and Popular tabs driven by real play counts' },
+        { type: 'add', text: 'Rank badges for Popular (#1 gold, #2 silver, #3 bronze, LEAST at bottom)' },
+        { type: 'change', text: 'Game banners switched to wide horizontal layout with blurred background' },
+        { type: 'add', text: 'Notification bell with welcome message' },
+      ]
+    },
+    {
+      date: '15.10.2026 · later',
+      title: 'Library + Favorites',
+      items: [
+        { type: 'add', text: 'Library tab showing only games you have played' },
+        { type: 'add', text: 'Library filters: Recently Played, Most Played, Favorites' },
+        { type: 'add', text: 'Favorite button (heart) exclusive to Library' },
+        { type: 'change', text: 'Game banners resized to 4 per row so low-res thumbnails are less noticeable' },
+      ]
+    },
+    {
+      date: '15.10.2026 · later',
+      title: 'Massive Game Drop',
+      items: [
+        { type: 'add', text: 'Added ~20 new games: Moto X3M series (2, 3, Spooky Land, Pool Party, Winter), GTA 5, Minecraft 1.20.6, Subway Surfers, Madness Project Nexus, Bad Piggies, Hill Climb Racing Lite, Melon Playground, 8 Ball Pool, 60 Seconds, Basket Random, Binding of Isaac, Black Ops 1 Zombies, BuildNow GG, Clustertruck, Crashout Crew, Crossy Road, CS Surf, Deathrun 3D, Doodle Jump, Drift Hunters, Getaway Shootout, How to Fish, Kickabout, La Madriguera, NoomiClone, PEAK, Pikuniku, Russian Counter Strike, Skate 3, Table Tennis World Tour, Trees Hate You, Trombone Champ, Wheelie Bike, People Playground, Hollow Knight: Silksong, FNAF: Sister Location, FNAF: Pizzeria Simulator' },
+        { type: 'fix', text: 'All banner images rehosted to local assets/ folder so they no longer break from hotlink protection' },
+        { type: 'fix', text: 'Geometry Dash banner updated to working Steam URL' },
+        { type: 'fix', text: 'Plague Inc. banner updated to Nintendo URL' },
+      ]
+    },
+    {
+      date: '15.10.2026 · latest',
+      title: 'Bulk Uploads + More Games',
+      items: [
+        { type: 'add', text: 'Added Sprunki, 3D Flight Simulator, Angry Birds, Tomb of the Mask' },
+        { type: 'add', text: 'Changelog page accessible from the top bar' },
+        { type: 'remove', text: 'Bulk Uploaded page scrapped (not implemented)' },
+      ]
+    },
+  ];
+
+  // ================================================================
+  // STATS via CounterAPI
   // ================================================================
   const COUNTER_NS = 'mathgames-site';
   const COUNTER_API = 'https://counterapi.com/api';
@@ -647,7 +824,6 @@ body {
   let lastObservedActive = -1;
   let inFlight = false;
   const ids = getTrackIds();
-  let pageWasTracked = false;
 
   async function visitOnceToday(day) {
     const key = `mg-visit-${day}`;
@@ -685,12 +861,6 @@ body {
         lastObservedActive = -1;
         totalCache = 0;
         peakCache = 0;
-      }
-      const m = location.pathname.match(/\/games\/([^/]+)\.html?$/i) || location.pathname.match(/\/play\/([^/]+)\.html?$/i);
-      if (m && !pageWasTracked) {
-        const slug = decodeURIComponent(m[1]).toLowerCase();
-        await counterHit('play', `${day}-${slug}`, { userId: ids.visitorId });
-        pageWasTracked = true;
       }
       await counterHit('presence', 'all', { userId: ids.visitorId });
       const active = await counterRead('presence', 'all', { timeline: '2m', unique: 'true' });
@@ -737,7 +907,7 @@ body {
   }
 
   // ================================================================
-  // LIBRARY (localStorage-based)
+  // LIBRARY
   // ================================================================
   function getLibrary() {
     try { return JSON.parse(localStorage.getItem('mg-library') || '{}'); } catch { return {}; }
@@ -794,6 +964,7 @@ body {
     if (e.key === 'Enter' && !startScreen.classList.contains('slide-up')) startBtn.click();
   });
 
+  // Notification
   const notifBell = document.getElementById('notifBell');
   const notifPopup = document.getElementById('notifPopup');
   const notifClose = document.getElementById('notifClose');
@@ -808,6 +979,35 @@ body {
   });
   notifClose.addEventListener('click', () => notifPopup.classList.remove('show'));
 
+  // Changelog
+  const changelogBtn = document.getElementById('changelogBtn');
+  const changelogPopup = document.getElementById('changelogPopup');
+  const changelogClose = document.getElementById('changelogClose');
+  const changelogBody = document.getElementById('changelogBody');
+
+  function renderChangelog() {
+    changelogBody.innerHTML = CHANGELOG.map(entry => `
+      <div class="changelog-entry ${entry.creation ? 'creation' : ''}">
+        <div class="changelog-date">${entry.date}</div>
+        <div class="changelog-title">${entry.title}</div>
+        <ul class="changelog-list">
+          ${entry.items.map(item => `<li class="${item.type}">${item.text}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+  }
+  renderChangelog();
+
+  changelogBtn.addEventListener('click', () => changelogPopup.classList.add('show'));
+  changelogClose.addEventListener('click', () => changelogPopup.classList.remove('show'));
+  changelogPopup.addEventListener('click', (e) => {
+    if (e.target === changelogPopup) changelogPopup.classList.remove('show');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && changelogPopup.classList.contains('show')) changelogPopup.classList.remove('show');
+  });
+
+  // Games
   async function getGamesForFilter(filter, searchTerm) {
     let list = [...GAMES];
 
@@ -826,7 +1026,6 @@ body {
           return (lib[sb]?.plays || 0) - (lib[sa]?.plays || 0);
         });
       } else {
-        // recently played
         list.sort((a, b) => {
           const sa = a.file.replace(/\.html?$/i, '');
           const sb = b.file.replace(/\.html?$/i, '');
@@ -897,7 +1096,6 @@ body {
         const showPlays = (currentFilter === 'trending' || currentFilter === 'popular') && plays > 0;
         const meta = showPlays ? `<div class="game-banner-meta">${plays} plays</div>` : '';
 
-        // Rank badge for popular
         let rank = '';
         if (currentFilter === 'popular' && plays > 0) {
           const total = games.length;
@@ -910,7 +1108,6 @@ body {
           }
         }
 
-        // Favorite button for Library
         let favBtn = '';
         if (currentFilter === 'library') {
           const fav = isFav(g.file);
@@ -935,7 +1132,6 @@ body {
 
     contentArea.innerHTML = html;
 
-    // Banner click → open preview
     contentArea.querySelectorAll('.game-banner').forEach(b => {
       b.addEventListener('click', (e) => {
         if (e.target.closest('.fav-btn')) return;
@@ -943,7 +1139,6 @@ body {
       });
     });
 
-    // Favorite buttons
     contentArea.querySelectorAll('.fav-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -955,6 +1150,9 @@ body {
 
   function openPreview(file, name) {
     recordPlay(file);
+    const slug = file.replace(/\.html?$/i, '').toLowerCase();
+    const day = ukDayKey();
+    counterHit('play', `${day}-${slug}`, { userId: ids.visitorId }).catch(() => {});
     previewIframe.src = 'games/' + file;
     previewTitle.textContent = name;
     gamePreview.classList.add('show');
